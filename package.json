@@ -7,7 +7,7 @@
     "start": "node core/server.js"
   },
   "dependencies": {
-    "@octokit/rest": "^19.0.7",
+    "@octokit/rest": "^22.0.1",
     "express": "^4.22.1",
     "simple-git": "^3.36.0"
   }
