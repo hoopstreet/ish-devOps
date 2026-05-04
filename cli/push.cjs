@@ -1,8 +1,10 @@
 const http = require("http");
 
 const data = JSON.stringify({
-  type: "auto",
-  message: process.argv.slice(2).join(" ")
+  type: "git",
+  action: "commit",
+  repo: "ish-devOps",
+  message: process.argv.slice(2).join(" ") || "auto commit"
 });
 
 const req = http.request({
@@ -12,7 +14,7 @@ const req = http.request({
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "Content-Length": data.length
+    "Content-Length": Buffer.byteLength(data)
   }
 }, res => {
   let body = "";
@@ -20,6 +22,9 @@ const req = http.request({
   res.on("end", () => console.log(body));
 });
 
-req.on("error", e => console.error("ERROR:", e.message));
+req.on("error", e => {
+  console.log("⚠️ Server not running. Start: node core/server.js");
+});
+
 req.write(data);
 req.end();
