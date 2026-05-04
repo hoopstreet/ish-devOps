@@ -1,0 +1,11 @@
+{
+  "name": "ish-devOps",
+  "version": "7.0.0",
+  "main": "core/server.js",
+  "scripts": {
+    "start": "node core/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

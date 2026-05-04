@@ -1,0 +1,44 @@
+name: 🧠 Repo Auto Cleaner
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  clean-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Detect duplicate folders
+        run: |
+          echo "Scanning repo structure..."
+
+          if [ -d "ish-devos" ] || [ -d "ish-devOps" ] || [ -d "devos" ]; then
+            echo "⚠️ Duplicate architecture detected"
+          else
+            echo "✅ Structure clean"
+          fi
+
+      - name: Normalize structure
+        run: |
+          mkdir -p core workers cli memory sys repo
+
+          echo "Enforcing canonical structure..."
+
+      - name: Remove unsafe duplicates
+        run: |
+          rm -rf ish-devos || true
+          rm -rf devos || true
+          rm -rf ish-dev-ops || true
+
+      - name: Commit cleanup changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add .
+          git commit -m "🧠 auto repo cleanup + structure normalization" || exit 0
+          git push

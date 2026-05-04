@@ -1,0 +1,28 @@
+name: ish-devOps Auto Clean
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run dedupe
+        run: node scripts/dedupe.js || true
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "auto cleanup + dedupe" || echo "no changes"
+          git push || true

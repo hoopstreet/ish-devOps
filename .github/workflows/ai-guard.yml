@@ -1,0 +1,28 @@
+name: 🤖 AI Repo Guard
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for broken structure
+        run: |
+          echo "Validating repo integrity..."
+
+          if [ ! -d "core" ]; then
+            echo "❌ Missing core system"
+            exit 1
+          fi
+
+          if [ ! -f "core/server.js" ]; then
+            echo "❌ Server missing"
+            exit 1
+          fi
+
+          echo "✅ Repo valid"
