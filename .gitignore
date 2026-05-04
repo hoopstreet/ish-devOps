@@ -1,3 +1,8 @@
 node_modules
 .env
+<<<<<<< HEAD
+=======
+npm-debug.log
+.DS_Store
+>>>>>>> 63a97a7bf58dcd1f6356a7c812aa9f14e6adc839
 repo/
